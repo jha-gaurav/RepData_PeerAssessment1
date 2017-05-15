@@ -10,11 +10,18 @@ output:
 
 ```{r, echo = TRUE}
 data1 <- read.csv("activity.csv", header = TRUE, stringsAsFactors = FALSE)
+#Convert the date from character to a Date format
 data1$date <- as.Date(data1$date, "%Y-%m-%d")
 
 ```
 ## What is mean total number of steps taken per day?
+```{r, echo = TRUE}
+mean_agg <- aggregate(steps ~ date, data1, mean, na.rm = TRUE)
+print(mean_agg)
+with(mean_agg, plot(date, steps, type = "h"))
 
+```
+with(mean_agg, plot(date, steps, type = "h"))
 
 
 ## What is the average daily activity pattern?
