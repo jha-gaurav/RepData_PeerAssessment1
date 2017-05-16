@@ -10,24 +10,41 @@ output:
 ## Loading and preprocessing the data
 
 ```{r, echo = TRUE}
-data1 <- read.csv("activity.csv", header = TRUE, stringsAsFactors = FALSE)
+data1 <- read.csv("activity.csv", header = TRUE, stringsAsFactors = FALSE, na.strings = "NA")
 #Convert the date from character to a Date format
 data1$date <- as.Date(data1$date, "%Y-%m-%d")
 
-```
-## What is mean total number of steps taken per day?
-```{r, echo = TRUE}
-mean_agg <- aggregate(steps ~ date, data1, mean, na.rm = TRUE)
-print(mean_agg)
-with(mean_agg, plot(date, steps, type = "h"))
+#Histogram of total steps taken each day
+
+sum_agg <- aggregate(steps ~ date, data1[!is.na(data1$steps),], FUN = sum)
+hist(sum_agg$steps, main = "Total Steps taken each day", xlab = "Steps")
 
 ```
-with(mean_agg, plot(date, steps, type = "h"))
+
+## What is mean total number of steps taken per day?
+
+```{r, echo = TRUE}
+#Mean of the total steps taken each day
+mean_agg <- aggregate(steps ~ date, data1, mean, na.rm = TRUE)
+print(mean_agg)
+```
+
+``` {r, echo = TRUE}
+#Median of the totoal steps taken each day
+median_agg <- aggregate(steps ~ date, sum_agg, median)
+print(median_agg)
+#Time series plot of mean steps taken per day
+with(mean_agg, plot(date, steps, type = "l"))
+```
 
 
 ## What is the average daily activity pattern?
+``` {r, echo = TRUE}
+#Compute the 5-minute interval that, on average, contains maximum number of steps
+sum_steps <- aggregate(steps ~ interval, data1[!is.na(data1$steps),], FUN = sum)
+print(sum_steps[order(sum_steps$steps, decreasing = TRUE),][1,])
 
-
+```
 
 ## Imputing missing values
 
