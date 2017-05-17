@@ -179,5 +179,10 @@ val <- is.na(data1$steps)
 
 mean_steps <- aggregate(steps ~ interval, data1[!is.na(data1$steps),], FUN = mean)
 data1[val, 1] <- mean_steps[match(data1[val, 3], mean_steps$interval), 2]
+
+#Hisatogram of total steps taken each day
+hist(data1$steps, main = "Total Steps taken each day", xlab = "Steps")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 ## Are there differences in activity patterns between weekdays and weekends?
