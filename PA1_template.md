@@ -170,6 +170,14 @@ print(sum_steps[order(sum_steps$steps, decreasing = TRUE),][1,])
 
 ## Imputing missing values
 
+```r
+#Imputing Missing values
+#Identify which rows have NA values for steps
+val <- is.na(data1$steps)
+#data1[val,]
+#The NA will be replaced by the mean value of the steps in that time interval
 
-
+mean_steps <- aggregate(steps ~ interval, data1[!is.na(data1$steps),], FUN = mean)
+data1[val, 1] <- mean_steps[match(data1[val, 3], mean_steps$interval), 2]
+```
 ## Are there differences in activity patterns between weekdays and weekends?

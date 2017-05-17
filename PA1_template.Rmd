@@ -50,9 +50,9 @@ print(sum_steps[order(sum_steps$steps, decreasing = TRUE),][1,])
 ``` {r, echo = TRUE}
 
 #Imputing Missing values
-#The missing values are present for the following dates and time intervals
+#Identify which rows have NA values for steps
 val <- is.na(data1$steps)
-data1[val,]
+#data1[val,]
 #The NA will be replaced by the mean value of the steps in that time interval
 
 mean_steps <- aggregate(steps ~ interval, data1[!is.na(data1$steps),], FUN = mean)
