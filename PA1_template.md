@@ -12,7 +12,7 @@ data1$date <- as.Date(data1$date, "%Y-%m-%d")
 #Histogram of total steps taken each day
 
 sum_agg <- aggregate(steps ~ date, data1[!is.na(data1$steps),], FUN = sum)
-hist(sum_agg$steps, main = "Total Steps taken each day", xlab = "Steps")
+barplot(sum_agg$steps, width = 1, names.arg = sum_agg$date, space = 0, main = "Total Steps taken each day", xlab = "Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
@@ -181,8 +181,17 @@ mean_steps <- aggregate(steps ~ interval, data1[!is.na(data1$steps),], FUN = mea
 data1[val, 1] <- mean_steps[match(data1[val, 3], mean_steps$interval), 2]
 
 #Hisatogram of total steps taken each day
-hist(data1$steps, main = "Total Steps taken each day", xlab = "Steps")
+sum_agg <- aggregate(steps ~ date, data1[!is.na(data1$steps),], FUN = sum)
+barplot(sum_agg$steps, width = 1, names.arg = sum_agg$date, space = 0, main = "Total Steps taken each day", xlab = "Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+```r
+data1$dayname <- weekdays(data1$date)
+
+par(mfrow = c(1,2))
+```
