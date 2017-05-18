@@ -74,16 +74,11 @@ print(median_agg)
 
 ```{r, echo = TRUE}
 
+library(lattice)
 weekday <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 data1$dayname <- factor((weekdays(data1$date) %in% weekday), 
                         levels=c(FALSE, TRUE), labels=c('weekend', 'weekday'))
 
-par(mfrow = c(2,1))
-
-mean_weekday <- aggregate(steps ~ interval, data1[data1$dayname == "weekday",], FUN = mean)
-with(mean_weekday, plot(interval, steps, type = "l"))
-
-mean_weekend <- aggregate(steps ~ interval, data1[data1$dayname == "weekend",], FUN = mean)
-with(mean_weekend, plot(interval, steps, type = "l"))
+with(data1, xyplot(steps ~ interval|dayname, xlab = "Interval", ylab = "Number of Steps", layout = c(1,2), type = "l"))
 
 ```
